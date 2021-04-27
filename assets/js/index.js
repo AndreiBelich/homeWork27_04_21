@@ -83,10 +83,9 @@ function removeItem(id){
 
 function fillList(data){
   const listItems = [...document.querySelectorAll("#root > li")];
-  const idList = getAllId(listItems);
   for(const item of data){
     const {id, value} = item;
-    if(!idList.includes(id))
+    if(!hasId(listItems, id))
     {
       const li = createListItem(id, value);
       ul.append(li);
@@ -112,12 +111,13 @@ function findIndex(id){
   }
 }
 
-function getAllId(collection){
-  const idList = [];
+function hasId(collection, id){
   for(const item of collection){
-    idList.push(+item.dataset.id);
+    if(+item.dataset.id === id){
+      return true;
+    }
   }
-  return idList;
+  return false;
 }
 
 
