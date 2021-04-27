@@ -10,10 +10,7 @@ const getNextId = makeId();
 
 form.addEventListener("submit", submitHandler);
 
-showButton.addEventListener("click", () => {
-  fillUnorderedList(userValues);
-  checkData();
-});
+showButton.addEventListener("click", showButtonHandler);
 
 /*start handlers*/
 function submitHandler(event){
@@ -31,6 +28,11 @@ function submitHandler(event){
     });
   }
   target.reset();
+}
+
+function showButtonHandler(){
+  fillUnorderedList(userValues);
+  checkData();
 }
 
 function deleteButtonHandler(id){
@@ -70,6 +72,7 @@ function createElement(tagName, {classNames = [], handlers = {}}, ...children){
 function removeItem(id){
   const items = [...document.querySelectorAll("li")];
   const findItem = items.find((item) => item.dataset.id === ""+id);
+  //Не получилось при помощи indexOf найти нужный индекс по-этому индекс ищется в цикле
   let index = -1;
   for(let i = 0; i < userValues.length; i++){
     if(userValues[i].id === +findItem.dataset.id){
