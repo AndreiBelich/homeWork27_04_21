@@ -69,7 +69,7 @@ function createElement(tagName, {classNames = [], handlers = {}}, ...children){
 
 
 function removeItem(id){
-  const items = [...document.querySelectorAll("li")];
+  const items = [...document.querySelectorAll("#root > li")];
   const findItem = items.find((item) => +item.dataset.id === id);
   let index = findIndex(id);
   if(findItem && index >= 0){
