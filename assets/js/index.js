@@ -70,7 +70,7 @@ function createElement(tagName, {classNames = [], handlers = {}}, ...children){
 
 function removeItem(id){
   const items = [...document.querySelectorAll("li")];
-  const findItem = items.find((item) => item.dataset.id === ""+id);
+  const findItem = items.find((item) => +item.dataset.id === id);
   let index = findIndex(id);
   if(findItem && index >= 0){
     ul.removeChild(findItem);
@@ -83,10 +83,7 @@ function removeItem(id){
 
 function fillList(data){
   const listItems = [...document.querySelectorAll("#root > li")];
-  const idList = [];
-  for(const item of listItems){
-    idList.push(+item.dataset.id);
-  }
+  const idList = getAllId(listItems);
   for(const item of data){
     const {id, value} = item;
     if(!idList.includes(id))
@@ -113,6 +110,14 @@ function findIndex(id){
       return i;
     }
   }
+}
+
+function getAllId(collection){
+  const idList = [];
+  for(const item of collection){
+    idList.push(+item.dataset.id);
+  }
+  return idList;
 }
 
 
