@@ -50,12 +50,12 @@ button{
 }
 
 .listItem + .listItem{
-  margin-top: 15px;
   border-top: 2px solid darkblue;
 }
 
 .listItem{
   max-width: 500px;
+  padding: 15px 0;
 }
 
 .userText{
