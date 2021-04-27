@@ -33,7 +33,7 @@ function submitHandler(event){
 
 function showButtonHandler(){
   fillList(userValues);
-  checkData();
+  changeBorder();
 }
 
 const deleteButtonHandler = (id) => () => removeItem(id);
@@ -71,19 +71,14 @@ function createElement(tagName, {classNames = [], handlers = {}}, ...children){
 function removeItem(id){
   const items = [...document.querySelectorAll("li")];
   const findItem = items.find((item) => item.dataset.id === ""+id);
-  //Не получилось при помощи indexOf найти нужный индекс по-этому индекс ищется в цикле
-  let index = -1;
-  for(let i = 0; i < userValues.length; i++){
-    if(userValues[i].id === +findItem.dataset.id){
-      index = i;
-      break;
-    }
-  }
-  if(findItem){
+  let index = findIndex(id);
+  if(findItem && index >= 0){
     ul.removeChild(findItem);
     userValues.splice(index, 1);
+  }else{
+    throw new Error("Невозможно удалить элемент!");
   }
-  checkData(); 
+  changeBorder(); 
 }
 
 function fillList(data){
@@ -102,12 +97,21 @@ function fillList(data){
   }
 }
 
-/*Вспомогательные функции изменяющие стили*/
-function checkData(){
+/*Вспомогательные функции*/
+function changeBorder(){
   if(userValues.length){
     ul.classList.add("rootBorder");
   }else{
     ul.classList.remove("rootBorder");
+  }
+}
+
+function findIndex(id){
+   //Не получилось при помощи indexOf найти нужный индекс по-этому индекс ищется в цикле, находит правильно
+  for(let i = 0; i < userValues.length; i++){
+    if(userValues[i].id === id){
+      return i;
+    }
   }
 }
 
