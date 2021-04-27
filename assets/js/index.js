@@ -1,11 +1,12 @@
 "use strict";
 
+//Функция которая создает id
 const makeId = (value = 0) => () => ++value;
 
 const form = document.querySelector(".main-form");
 const showButton = document.querySelector("#showButton");
 const ul = document.querySelector("#root");
-const userValues = [];
+const userValues = [];//Массив будет заполняться данными вида {id: number, value: string}
 const getNextId = makeId();
 
 form.addEventListener("submit", submitHandler);
@@ -31,13 +32,11 @@ function submitHandler(event){
 }
 
 function showButtonHandler(){
-  fillUnorderedList(userValues);
+  fillList(userValues);
   checkData();
 }
 
-function deleteButtonHandler(id){
-  return () => removeItem(id);
-}
+const deleteButtonHandler = (id) => () => removeItem(id);
 
 /*end handlers*/
 
@@ -87,7 +86,7 @@ function removeItem(id){
   checkData(); 
 }
 
-function fillUnorderedList(data){
+function fillList(data){
   const listItems = [...document.querySelectorAll("#root > li")];
   const idList = [];
   for(const item of listItems){
