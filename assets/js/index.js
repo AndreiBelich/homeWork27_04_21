@@ -15,6 +15,7 @@ showButton.addEventListener("click", () => {
   checkData();
 });
 
+/*start handlers*/
 function submitHandler(event){
   event.preventDefault();
   const {
@@ -32,33 +33,43 @@ function submitHandler(event){
   target.reset();
 }
 
+function deleteButtonHandler(id){
+  return () => removeItem(id);
+}
+
+/*end handlers*/
+
+/*Функции создающие элементы START*/
 function createListItem(id, value){
-  const li = document.createElement("li");
-  li.classList.add("listItem");
-  li.dataset.id = id;
-
-  const wrapper = document.createElement("div");
-  wrapper.classList.add("flexContainer");
-
-  const div = document.createElement("div");
-  div.classList.add("userText")
-  div.innerText = value;
-  const button = document.createElement("button");
-  button.classList.add("deleteButton");
-  button.innerText = "delete";
-  wrapper.append(div, button);
-
-  button.addEventListener("click", ()=> {
-    removeItem(li.dataset.id);
+  const div = createElement("div", {classNames: ["userText"]}, document.createTextNode(value));
+  const button = createElement("button", {
+    classNames: ["deleteButton"],
+    handlers:{
+      click : deleteButtonHandler(id)
+    }
   });
-
-  li.append(wrapper);
+  button.innerText = "delete";
+  const wrapper = createElement("div", {classNames: ["flexContainer"]}, div, button);
+  const li = createElement("li", {classNames: ["listItem"]}, wrapper);
+  li.dataset.id = id;
   return li;
 }
 
+function createElement(tagName, {classNames = [], handlers = {}}, ...children){
+  const element = document.createElement(tagName);
+  element.classList.add(...classNames);
+  for(const [eventType, eventHandler] of Object.entries(handlers)){
+    element.addEventListener(eventType, eventHandler);
+  }
+  element.append(...children);
+  return element;
+}
+/*Функции создающие элементы END*/
+
+
 function removeItem(id){
   const items = [...document.querySelectorAll("li")];
-  const findItem = items.find((item) => item.dataset.id === id);
+  const findItem = items.find((item) => item.dataset.id === ""+id);
   let index = -1;
   for(let i = 0; i < userValues.length; i++){
     if(userValues[i].id === +findItem.dataset.id){
@@ -71,14 +82,6 @@ function removeItem(id){
     userValues.splice(index, 1);
   }
   checkData(); 
-}
-
-function checkData(){
-  if(userValues.length){
-    ul.classList.add("rootBorder");
-  }else{
-    ul.classList.remove("rootBorder");
-  }
 }
 
 function fillUnorderedList(data){
@@ -94,6 +97,15 @@ function fillUnorderedList(data){
       const li = createListItem(id, value);
       ul.append(li);
     }
+  }
+}
+
+/*Вспомогательные функции изменяющие стили*/
+function checkData(){
+  if(userValues.length){
+    ul.classList.add("rootBorder");
+  }else{
+    ul.classList.remove("rootBorder");
   }
 }
 

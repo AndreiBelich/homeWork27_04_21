@@ -12,15 +12,46 @@
   border-radius: 10px;
 }
 
-.listItem + .listItem{
-  margin-top: 15px;
-  border-top: 2px solid darkblue;
+.wrapper{
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.main-form{
+  padding: 15px;
+  margin: 0 auto;
+  max-width: 405px;
+  border: 1px solid brown;
+  border-radius: 10px;
+}
+
+input[type="text"]{
+  margin-right: 25px;
+  padding: 10px 5px;
+  border: 1px solid lightgrey;
+}
+
+button{
+  padding: 10px;
+  border: none;
+  background-color: lightblue;
+}
+
+#showButton{
+  display: block;
+  margin: 15px auto;
 }
 
 .flexContainer{
   display: flex;
   padding: 10px 25px;
   justify-content: space-between;
+}
+
+.listItem + .listItem{
+  margin-top: 15px;
+  border-top: 2px solid darkblue;
 }
 
 .listItem{
