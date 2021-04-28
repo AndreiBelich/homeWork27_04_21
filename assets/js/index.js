@@ -22,10 +22,11 @@ function submitHandler(event){
       elements: {userInput}
     }
   } = event;
-  if(userInput.value){
+  const tempValue = userInput.value.trim();
+  if(tempValue){
     userValues.push({
       id: getNextId(),
-      value: userInput.value.trim()
+      value: tempValue
     });
   }
   target.reset();
